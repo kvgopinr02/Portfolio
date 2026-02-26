@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gopinadh Reddy — BTech Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,100;0,700;1,100;1,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f5f0;
+  --ink: #12100e;
+  --soft: #e8e4dd;
+  --muted: #9e9a94;
+  --green: #1a9e6f;
+  --lime: #b5f23e;
+  --warm: #f5a623;
+  --rose: #f06292;
+  --card: #ffffff;
+  --border: rgba(18,16,14,0.08);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ══ NAV ══ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 1.4rem 3rem;
+  display: flex; justify-content: space-between; align-items: center;
+  opacity: 0; transform: translateY(-20px);
+  transition: opacity .6s ease, transform .6s ease, background .4s;
+}
+nav.shown { opacity: 1; transform: translateY(0); }
+nav.scrolled {
+  background: rgba(247,245,240,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.n-logo {
+  font-family: 'Fraunces', serif; font-weight: 700;
+  font-size: 1.15rem; letter-spacing: -0.02em;
+}
+.n-logo em { font-style: italic; color: var(--green); }
+.n-links { display: flex; gap: 2rem; list-style: none; }
+.n-links a {
+  font-size: 0.78rem; font-weight: 500; color: var(--muted);
+  text-decoration: none; letter-spacing: 0.02em;
+  position: relative; transition: color .25s;
+}
+.n-links a:hover { color: var(--ink); }
+.n-links a::after {
+  content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+  height: 1.5px; background: var(--green);
+  transform: scaleX(0); transform-origin: right;
+  transition: transform .35s cubic-bezier(0.76,0,0.24,1);
+}
+.n-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+.n-pill {
+  padding: .55rem 1.3rem; border-radius: 100px;
+  background: var(--ink); color: var(--bg);
+  font-size: .78rem; font-weight: 600;
+  text-decoration: none; letter-spacing: .03em;
+  transition: background .25s, transform .25s;
+}
+.n-pill:hover { background: var(--green); transform: scale(1.04); }
+
+/* ══ SECTION LAYOUT ══ */
+section { padding: 7rem 3rem; position: relative; }
+.container { max-width: 1140px; margin: 0 auto; }
+
+/* ══ HERO ══ */
+#hero {
+  min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 420px;
+  align-items: center; gap: 4rem;
+  padding-top: 7rem;
+}
+.hero-left {}
+
+.hero-tags {
+  display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 2.5rem;
+}
+.tag-pill {
+  padding: .3rem .9rem; border-radius: 100px;
+  font-size: .68rem; font-weight: 600; letter-spacing: .05em;
+  border: 1.5px solid var(--border); background: var(--card);
+  transform: translateY(20px); opacity: 0;
+  animation: tagIn .5s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+.tag-pill:nth-child(1){ animation-delay: 1.2s; background: #e8f9f0; border-color: #a8e6cc; color: var(--green); }
+.tag-pill:nth-child(2){ animation-delay: 1.3s; }
+.tag-pill:nth-child(3){ animation-delay: 1.4s; }
+.tag-pill:nth-child(4){ animation-delay: 1.5s; background: #fffbeb; border-color: #fde68a; color: #d97706; }
+@keyframes tagIn { to { transform: translateY(0); opacity: 1; } }
+
+.hero-h {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(3rem, 6vw, 6.5rem);
+  font-weight: 700; line-height: .97;
+  letter-spacing: -0.035em; margin-bottom: 2rem;
+}
+.hero-h .line { overflow: hidden; display: block; }
+.hero-h .li {
+  display: block; transform: translateY(105%);
+  animation: liftIn .9s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+.hero-h .li:nth-child(1){ animation-delay: 1.1s; }
+.hero-h .li:nth-child(2){ animation-delay: 1.2s; }
+.hero-h .li:nth-child(3){ animation-delay: 1.3s; }
+.hero-h .li:nth-child(4){ animation-delay: 1.4s; }
+.green { color: var(--green); }
+.italic { font-style: italic; font-weight: 100; color: var(--muted); }
+@keyframes liftIn { to { transform: translateY(0); } }
+
+.hero-p {
+  font-size: .95rem; line-height: 1.85; color: var(--muted);
+  max-width: 44ch; margin-bottom: 3rem;
+  opacity: 0; animation: fadeUp .7s 1.6s ease forwards;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+.hero-actions {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  opacity: 0; animation: fadeUp .7s 1.75s ease forwards;
+}
+.mag-btn {
+  display: inline-flex; align-items: center; gap: .6rem;
+  padding: .9rem 2.2rem; border-radius: 100px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: .82rem; font-weight: 600; letter-spacing: .03em;
+  text-decoration: none; border: none;
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1);
+  position: relative; overflow: hidden;
+}
+.mag-btn-dark { background: var(--ink); color: var(--bg); }
+.mag-btn-dark .btn-bg { background: var(--green); }
+.mag-btn-light { background: transparent; color: var(--ink); border: 1.5px solid var(--border); }
+.mag-btn-light .btn-bg { background: var(--soft); }
+.btn-bg {
+  position: absolute; inset: 0; border-radius: 100px;
+  transform: scale(0); transition: transform .45s cubic-bezier(0.34,1.56,0.64,1);
+  z-index: 0;
+}
+.mag-btn:hover .btn-bg { transform: scale(1); }
+.mag-btn span { position: relative; z-index: 1; }
+.btn-arrow { position: relative; z-index: 1; transition: transform .3s; }
+.mag-btn:hover .btn-arrow { transform: translate(3px,-3px); }
+
+/* HERO CARD */
+.hero-right {
+  opacity: 0; animation: fadeUp .8s 1.5s ease forwards;
+}
+.id-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 0 20px 60px rgba(18,16,14,.07);
+  position: relative; overflow: hidden;
+}
+.id-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--green), var(--lime), var(--warm));
+}
+.id-avatar {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--green), var(--lime));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 700;
+  color: var(--ink); margin-bottom: 1.2rem;
+  animation: avatarPop 0.6s 1.8s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes avatarPop { from{transform:scale(0)} to{transform:scale(1)} }
+.id-name { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 700; letter-spacing: -.02em; }
+.id-sub { font-size: .78rem; color: var(--muted); margin-top: .2rem; margin-bottom: 1.5rem; }
+.id-divider { height: 1px; background: var(--border); margin: 1.2rem 0; }
+.id-row { display: flex; justify-content: space-between; font-size: .78rem; color: var(--muted); margin-bottom: .6rem; }
+.id-row strong { color: var(--ink); font-weight: 600; }
+.id-stat-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .8rem; margin-top: 1.5rem; }
+.id-stat {
+  background: var(--bg);
+  border-radius: 12px; padding: .9rem .6rem; text-align: center;
+  border: 1px solid var(--border);
+}
+.id-stat-n { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 700; color: var(--green); }
+.id-stat-l { font-size: .6rem; color: var(--muted); margin-top: .1rem; letter-spacing: .03em; }
+.avail-badge {
+  display: flex; align-items: center; gap: .5rem;
+  margin-top: 1.5rem; padding: .6rem 1rem;
+  background: #e8f9f0; border-radius: 100px;
+  font-size: .72rem; font-weight: 600; color: var(--green);
+  justify-content: center;
+}
+.avail-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--green); animation: ping 1.5s ease-in-out infinite;
+}
+@keyframes ping { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.5);opacity:.4} }
+
+/* ══ MARQUEE DIVIDER ══ */
+.marquee-wrap {
+  overflow: hidden; background: var(--ink); padding: 1.1rem 0;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.marquee-track {
+  display: flex; gap: 2rem; white-space: nowrap;
+  animation: marqueeRun 22s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+.m-item {
+  display: flex; align-items: center; gap: 2rem;
+  font-family: 'Fraunces', serif; font-size: 1.1rem;
+  font-style: italic; font-weight: 100; color: rgba(255,255,255,.5);
+}
+.m-star { color: var(--lime); font-style: normal; font-size: .7rem; }
+.m-item.hi { color: var(--lime); }
+@keyframes marqueeRun { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ══ SKILLS - BENTO GRID ══ */
+#skills { background: var(--ink); color: var(--bg); }
+#skills .sec-tag { color: var(--lime); }
+.bento { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: 80px; gap: 1rem; margin-top: 3rem; }
+.bento-cell {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 16px; padding: 1.5rem;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  transition: background .35s, border-color .35s, transform .35s;
+  overflow: hidden; position: relative;
+}
+.bento-cell:hover { background: rgba(255,255,255,.08); border-color: rgba(181,242,62,.25); transform: translateY(-4px); }
+.bento-cell:hover .bc-glow { opacity: 1; }
+.bc-glow {
+  position: absolute; top: -40px; right: -40px;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(181,242,62,.12) 0%, transparent 70%);
+  opacity: 0; transition: opacity .4s; border-radius: 50%;
+}
+.bc-emoji { font-size: 1.6rem; margin-bottom: .5rem; }
+.bc-name { font-weight: 600; font-size: .88rem; }
+.bc-sub { font-size: .68rem; color: rgba(255,255,255,.35); margin-top: .15rem; }
+.bc-level { margin-top: .8rem; }
+.bc-bar { height: 2px; background: rgba(255,255,255,.08); border-radius: 2px; overflow: hidden; }
+.bc-fill { height: 100%; background: var(--lime); border-radius: 2px; width: 0; transition: width 1.4s cubic-bezier(0.16,1,0.3,1); }
+/* spans */
+.s1{ grid-column: span 3; grid-row: span 2; }
+.s2{ grid-column: span 2; grid-row: span 2; }
+.s3{ grid-column: span 4; grid-row: span 2; }
+.s4{ grid-column: span 3; grid-row: span 2; }
+.s5{ grid-column: span 2; grid-row: span 2; }
+.s6{ grid-column: span 2; grid-row: span 2; }
+.s7{ grid-column: span 3; grid-row: span 2; }
+.s8{ grid-column: span 3; grid-row: span 2; }
+.s9{ grid-column: span 4; grid-row: span 2; }
+.bento-wide {
+  grid-column: span 5; grid-row: span 2;
+  justify-content: space-between; flex-direction: row; align-items: center;
+}
+.bento-wide .bc-emoji { font-size: 2.5rem; margin-bottom: 0; }
+
+/* ══ SEC HEADER ══ */
+.sec-tag {
+  font-size: .65rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--green); display: flex; align-items: center; gap: .7rem; margin-bottom: .8rem;
+}
+.sec-tag::before { content:''; width: 1.8rem; height: 1px; background: currentColor; }
+.sec-h {
+  font-family: 'Fraunces', serif; font-size: clamp(2rem,3.5vw,3.2rem);
+  font-weight: 700; letter-spacing: -.03em; line-height: 1.1;
+}
+.sec-h em { font-style: italic; font-weight: 100; color: var(--muted); }
+
+/* ══ PROJECTS - STACKED CARDS ══ */
+#projects { background: var(--bg); }
+.proj-list { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 3.5rem; }
+.pc {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px; padding: 2.5rem;
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: start; gap: 3rem;
+  transition: box-shadow .35s, transform .35s;
+  position: relative; overflow: hidden;
+}
+.pc::after {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--green); transform: scaleY(0); transform-origin: bottom;
+  transition: transform .45s cubic-bezier(0.16,1,0.3,1);
+}
+.pc:hover { box-shadow: 0 24px 60px rgba(18,16,14,.08); transform: translateX(6px); }
+.pc:hover::after { transform: scaleY(1); }
+.pc-left {}
+.pc-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.pc-icon {
+  width: 46px; height: 46px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; flex-shrink: 0;
+}
+.pc-title { font-family: 'Fraunces', serif; font-size: 1.25rem; font-weight: 700; letter-spacing: -.02em; }
+.pc-desc { font-size: .83rem; color: var(--muted); line-height: 1.8; max-width: 60ch; margin-bottom: 1.2rem; }
+.pc-tags { display: flex; gap: .5rem; flex-wrap: wrap; }
+.ptag {
+  font-size: .65rem; font-weight: 600; letter-spacing: .05em;
+  padding: .25rem .65rem; border-radius: 6px;
+  background: var(--soft); color: var(--ink);
+}
+.pc-right { display: flex; flex-direction: column; align-items: flex-end; gap: 1rem; padding-top: .3rem; }
+.pc-status {
+  font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  padding: .28rem .7rem; border-radius: 100px;
+}
+.st-live { background: #dcfce7; color: #16a34a; }
+.st-wip { background: #fef9c3; color: #ca8a04; }
+.st-done { background: #f3f4f6; color: #6b7280; }
+.pc-links { display: flex; gap: .5rem; }
+.pc-link {
+  width: 34px; height: 34px; border-radius: 8px;
+  border: 1px solid var(--border); display: flex; align-items: center;
+  justify-content: center; text-decoration: none; font-size: .8rem;
+  color: var(--muted); transition: all .25s;
+}
+.pc-link:hover { border-color: var(--green); color: var(--green); background: #e8f9f0; }
+.pc-year { font-size: .72rem; color: var(--muted); }
+
+/* ══ ABOUT / TIMELINE ══ */
+#about { background: var(--soft); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; margin-top: 3rem; }
+.timeline { position: relative; padding-left: 1.8rem; }
+.timeline::before {
+  content: ''; position: absolute; left: 0; top: .5rem; bottom: 0;
+  width: 1px; background: var(--border);
+}
+.tl-item { position: relative; padding-bottom: 2.5rem; }
+.tl-dot {
+  position: absolute; left: -2.2rem; top: .35rem;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--card); border: 2px solid var(--muted);
+  transition: border-color .3s, background .3s, transform .3s;
+}
+.tl-item:hover .tl-dot { border-color: var(--green); background: var(--green); transform: scale(1.3); }
+.tl-yr { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--green); margin-bottom: .3rem; }
+.tl-title { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.05rem; margin-bottom: .2rem; }
+.tl-place { font-size: .78rem; color: var(--muted); margin-bottom: .5rem; }
+.tl-body { font-size: .8rem; color: var(--muted); line-height: 1.75; max-width: 42ch; }
+.tl-chips { display: flex; gap: .4rem; flex-wrap: wrap; margin-top: .7rem; }
+.tl-chip {
+  font-size: .62rem; font-weight: 600; padding: .2rem .55rem;
+  border-radius: 5px; background: var(--card); border: 1px solid var(--border); color: var(--ink);
+}
+.about-info {}
+.info-card {
+  background: var(--card); border-radius: 20px;
+  border: 1px solid var(--border); padding: 2rem;
+  box-shadow: 0 4px 20px rgba(18,16,14,.04); margin-bottom: 1.2rem;
+}
+.info-card-title { font-weight: 700; font-size: .9rem; margin-bottom: 1.2rem; display: flex; align-items: center; gap: .6rem; }
+.info-card-title span { font-size: 1.1rem; }
+.achievement-item {
+  display: flex; align-items: flex-start; gap: .8rem;
+  padding: .7rem 0; border-bottom: 1px solid var(--border);
+  font-size: .8rem;
+}
+.achievement-item:last-child { border-bottom: none; padding-bottom: 0; }
+.ach-icon { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: .85rem; flex-shrink: 0; }
+.ach-t { font-weight: 600; color: var(--ink); }
+.ach-s { color: var(--muted); font-size: .72rem; margin-top: .1rem; }
+
+/* ══ CONTACT FULLWIDTH ══ */
+#contact {
+  background: var(--ink); color: var(--bg);
+  text-align: center;
+  padding: 8rem 3rem;
+}
+#contact .sec-tag { color: var(--lime); justify-content: center; }
+#contact .sec-tag::before { display: none; }
+.contact-big {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(3rem, 7vw, 7rem);
+  font-weight: 700; line-height: .95; letter-spacing: -.04em;
+  margin: 1.5rem auto 3rem; max-width: 14ch;
+}
+.contact-big em { font-style: italic; font-weight: 100; color: rgba(255,255,255,.25); }
+.contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; max-width: 700px; margin: 0 auto 4rem; }
+.ccon {
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 14px; padding: 1.5rem 1rem;
+  text-decoration: none; color: var(--bg);
+  transition: all .3s;
+}
+.ccon:hover { border-color: var(--lime); background: rgba(181,242,62,.06); transform: translateY(-4px); }
+.ccon-icon { font-size: 1.4rem; margin-bottom: .5rem; }
+.ccon-label { font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: .3rem; }
+.ccon-val { font-size: .78rem; font-weight: 600; color: var(--lime); }
+
+.cf {
+  max-width: 580px; margin: 0 auto;
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+  border-radius: 20px; padding: 2.5rem;
+  text-align: left;
+}
+.cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.cf-field { display: flex; flex-direction: column; gap: .35rem; margin-bottom: 1rem; }
+.cf-label { font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.35); }
+.cf-input, .cf-ta {
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px; padding: .8rem 1rem;
+  color: var(--bg); font-family: 'Space Grotesk', sans-serif; font-size: .875rem;
+  outline: none; resize: none;
+  transition: border-color .3s, background .3s;
+}
+.cf-input:focus, .cf-ta:focus { border-color: var(--lime); background: rgba(181,242,62,.04); }
+.cf-ta { height: 110px; }
+.cf-foot { display: flex; justify-content: flex-end; margin-top: .5rem; }
+
+/* ══ FOOTER ══ */
+footer {
+  background: var(--ink); border-top: 1px solid rgba(255,255,255,.05);
+  padding: 2rem 3rem;
+  display: flex; justify-content: space-between; align-items: center;
+  color: rgba(255,255,255,.4);
+}
+.f-logo { font-family: 'Fraunces', serif; font-size: 1rem; color: rgba(255,255,255,.8); font-weight: 700; }
+.f-copy { font-size: .72rem; }
+.f-links { display: flex; gap: 1.5rem; }
+.f-links a { font-size: .72rem; color: rgba(255,255,255,.35); text-decoration: none; transition: color .2s; }
+.f-links a:hover { color: var(--lime); }
+
+/* ══ SCROLL REVEAL ══ */
+.sr { opacity: 0; transform: translateY(32px); transition: opacity .75s ease, transform .75s cubic-bezier(0.16,1,0.3,1); }
+.sr.on { opacity: 1; transform: translateY(0); }
+.sd1 { transition-delay: .1s; } .sd2 { transition-delay: .2s; } .sd3 { transition-delay: .3s; } .sd4 { transition-delay: .4s; }
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:980px){
+  #hero { grid-template-columns: 1fr; padding-top: 5rem; }
+  .hero-right { display: none; }
+  .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .bento { grid-template-columns: repeat(6,1fr); }
+  .s1,.s2,.s3,.s4,.s5,.s6,.s7,.s8,.s9,.bento-wide { grid-column: span 3; }
+  .contact-grid { grid-template-columns: 1fr; }
+  section { padding: 5rem 1.5rem; }
+  nav { padding: 1.2rem 1.5rem; }
+  .n-links { display: none; }
+  .pc { grid-template-columns: 1fr; }
+  .pc-right { flex-direction: row; align-items: center; flex-wrap: wrap; }
+  .cf-row { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 1rem; padding: 2rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav" class="shown">
+  <div class="n-logo">Gopinadh  </div>
+  <ul class="n-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="n-pill">Hire Me ↗</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="container" style="display:contents">
+    <div class="hero-left" style="padding:0 3rem">
+      <div class="hero-tags">
+        <span class="tag-pill">🎓 BTech CSE · 3rd Year</span>
+        <span class="tag-pill">GVPCE VISAKHAPATNAM</span>
+        <span class="tag-pill">CGPA 8.2</span>
+        <span class="tag-pill">⚡ Open to Internships</span>
+      </div>
+      <h1 class="hero-h">
+        <span class="line"><span class="li">Hello, I'm</span></span>
+        <span class="line"><span class="li green">Gopinadh</span></span>
+        <span class="line"><span class="li">Reddy</span></span>
+        <span class="line"><span class="li italic">- computer science student</span></span>
+      </h1>
+      <p class="hero-p">Aspiring Full-Stack Developer and Computer Science student with strong problem-solving abilities and a passion for building real-world applications. Experienced in developing user-centric solutions and eager to contribute to innovative projects while continuously learning and growing in a professional environment..</p>
+      <div class="hero-actions">
+        <a href="#projects" class="mag-btn mag-btn-dark"><div class="btn-bg"></div><span>View Projects</span><span class="btn-arrow">↗</span></a>
+        <a href="file:///C:/Users/kummi/Downloads/323103310125_resume.pdf" class="mag-btn mag-btn-light" download><div class="btn-bg"></div><span>Resume</span><span class="btn-arrow">↓</span></a>
+      </div>
+    </div>
+    <div class="hero-right" style="padding-right:3rem">
+      <div class="id-card">
+        <div class="id-avatar">G</div>
+        <div class="id-name">Gopinadh Reddy</div>
+        <div class="id-sub">Computer Science Engineering · 2023–2027</div>
+        <div class="id-divider"></div>
+        <div class="id-row"><span>College</span><strong>GVPCE VISAKHAPATNAM</strong></div>
+        <div class="id-row"><span>Semester</span><strong>6th Sem</strong></div>
+        <div class="id-row"><span>Branch</span><strong>CSE</strong></div>
+        <div class="id-row"><span>Location</span><strong>Visakhapatnam, IN</strong></div>
+        <div class="id-stat-row">
+          <div class="id-stat"><div class="id-stat-n">8.2</div><div class="id-stat-l">CGPA</div></div>
+          <div class="id-stat"><div class="id-stat-n">3+</div><div class="id-stat-l">Projects</div></div>
+          <div class="id-stat"><div class="id-stat-n">0</div><div class="id-stat-l">Hackathons</div></div>
+        </div>
+        <div class="avail-badge"><div class="avail-dot"></div> Available for Internships</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="mtrack">
+    <span class="m-item hi">Full Stack Development <span class="m-star">✦</span></span>
+    <span class="m-item">Machine Learning & Cloud Computing <span class="m-star">✦</span></span>
+    <span class="m-item">React js <span class="m-star">✦</span></span>
+    <span class="m-item">Python & Data Science <span class="m-star">✦</span></span>
+    <span class="m-item">Node.js & APIs <span class="m-star">✦</span></span>
+    <span class="m-item hi">Open to Work <span class="m-star">✦</span></span>
+    <span class="m-item">100+ DSA Problems <span class="m-star">✦</span></span>
+    <!-- dupe -->
+    <span class="m-item hi">Full Stack Development <span class="m-star">✦</span></span>
+    <span class="m-item">Machine Learning & Cloud Computing <span class="m-star">✦</span></span>
+    <span class="m-item">React js <span class="m-star">✦</span></span>
+    <span class="m-item">Python & Data Science <span class="m-star">✦</span></span>
+    <span class="m-item">Node.js & Express <span class="m-star">✦</span></span>
+    <span class="m-item hi">Open to Work <span class="m-star">✦</span></span>
+    <span class="m-item">100+ DSA Problems <span class="m-star">✦</span></span>
+  </div>
+</div>
+
+<!-- ── SKILLS BENTO ── -->
+<section id="skills">
+  <div class="container">
+    <div class="sr"><div class="sec-tag">Technical Skills</div></div>
+    <div class="sr sd1"><h2 class="sec-h">What I <em>work with</em></h2></div>
+    <div class="bento sr sd2">
+  <!-- Programming -->
+  <div class="bento-cell s1"><div class="bc-glow"></div><div class="bc-emoji">🐍</div><div class="bc-name">Python</div><div class="bc-sub">Programming</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="85"></div></div></div></div>
+  <div class="bento-cell s2"><div class="bc-glow"></div><div class="bc-emoji">🟨</div><div class="bc-name">JavaScript</div><div class="bc-sub">Programming</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="50"></div></div></div></div>
+
+  <!-- MERN Stack -->
+  <div class="bento-cell bento-wide s3"><div class="bc-glow"></div><div style="display:flex;flex-direction:column;justify-content:flex-end;flex:1"><div class="bc-emoji">🍃</div><div class="bc-name">MERN Stack</div><div class="bc-sub">MongoDB · Express.js · React.js · Node.js</div></div></div>
+  
+  <!-- Tools & Technologies -->
+  <div class="bento-cell s8"><div class="bc-glow"></div><div class="bc-emoji">🐙</div><div class="bc-name">GitHub</div><div class="bc-sub">Version Control</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="90"></div></div></div></div>
+  <div class="bento-cell s9"><div class="bc-glow"></div><div class="bc-emoji">💻</div><div class="bc-name">VS Code</div><div class="bc-sub">Code Editor</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="70"></div></div></div></div>
+  <div class="bento-cell s1"><div class="bc-glow"></div><div class="bc-emoji">🚀</div><div class="bc-name">Render</div><div class="bc-sub">Deployment</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="50"></div></div></div></div>
+
+  <!-- Core Concepts -->
+  <div class="bento-cell s2"><div class="bc-glow"></div><div class="bc-emoji">🧩</div><div class="bc-name">DSA Basics</div><div class="bc-sub">Core Concepts</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="75"></div></div></div></div>
+  <div class="bento-cell s4"><div class="bc-glow"></div><div class="bc-emoji">🗄️</div><div class="bc-name">MySQL</div><div class="bc-sub">Database</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="50"></div></div></div></div>
+
+
+<div class="bento-cell bento-wide s3"><div class="bc-glow"></div><div style="display:flex;flex-direction:column;justify-content:flex-end;flex:1"><div class="bc-emoji">📚</div><div class="bc-name">Core Subjects</div><div class="bc-sub">Operating System · Networking · Cloud Computing</div></div></div>
+  </div>
+  
+</section>
+
+<!-- ── PROJECTS ── -->
+<section id="projects">
+  <div class="container">
+    <div class="sr"><div class="sec-tag">My Work</div></div>
+    <div class="sr sd1"><h2 class="sec-h">Selected <em>projects</em></h2></div>
+    <div class="proj-list">
+
+      <div class="pc sr sd1">
+        <div class="pc-left">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#e8f9f0;">🤖</div>
+            <div class="pc-title">CodeGarage – Academic Resource & Programming Learning Platform</div>
+          </div>
+          <div class="pc-desc">Built an academic website providing semester-wise PDFs, lab manuals, and C, C++, DSA programs.Designed a clean, user-friendly interface for easy access to learning resources.Deployed live using a custom domain: codegarage.co.in </div>
+          <div class="pc-tags"><span class="ptag">MERN Stack</span><span class="ptag">VS Code</span><span class="ptag">Render</span><span class="ptag">Github</span></div>
+        </div>
+        <div class="pc-right">
+          <span class="pc-status st-live">Live</span>
+          <div class="pc-links"><a class="pc-link" href="https://codegarage.co.in/" title="GitHub">⌥</a><a class="pc-link" href="codegarage.co.in" title="Demo">↗</a></div>
+          <div class="pc-year">2025</div>
+        </div>
+      </div>
+
+      <div class="pc sr sd2">
+        <div class="pc-left">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#fffbeb;">🤖</div>
+            <div class="pc-title">Weather Report Project </div>
+          </div>
+          <div class="pc-desc">Completed an internship in Google Cloud Computing Foundations through EduSkills, gaining hands-on exposure to cloud 
+technologies. Developed a Weather Report Project using BigQuery, focusing on data analysis and real-time insights. Strengthened skills in cloud computing, SQL, and building data-driven web-based solutions.</div>
+          <div class="pc-tags"><span class="ptag">Cloud Computing</span><span class="ptag">BigQuery</span></div>
+        </div>
+        <div class="pc-right">
+          <span class="pc-status st-live">Live</span>
+          <div class="pc-links"><a class="pc-link" href="#" title="GitHub">⌥</a><a class="pc-link" href="#" title="Demo">↗</a></div>
+          <div class="pc-year">2024</div>
+        </div>
+      </div>
+
+     
+
+      
+
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT / TIMELINE ── -->
+<section id="about">
+  <div class="container">
+    <div class="sr"><div class="sec-tag">Background</div></div>
+    <div class="sr sd1"><h2 class="sec-h">Education & <em>journey</em></h2></div>
+    <div class="about-grid">
+      <div>
+        <div class="timeline">
+          <div class="tl-item sr">
+            <div class="tl-dot"></div>
+            <div class="tl-yr">2023 – Present</div>
+            <div class="tl-title">B.Tech — Computer Science & Engg.</div>
+            <div class="tl-place">GVPCE VISAKHAPATNAM · CGPA: 8.2/10</div>
+            <div class="tl-body">Studying core CS subjects: DSA, DBMS, OS, Computer Networks, ML.</div>
+            <div class="tl-chips"><span class="tl-chip">Algorithms</span><span class="tl-chip">DBMS</span><span class="tl-chip">ML</span><span class="tl-chip">Networks</span></div>
+          </div>
+          <div class="tl-item sr sd1">
+            <div class="tl-dot"></div>
+            <div class="tl-yr">2021 - 2023</div>
+            <div class="tl-title">Class XII — Board Of Intermediate Education AP</div>
+            <div class="tl-place">MPC Narasaraopet · State Board · 98.0%</div>
+            
+          </div>
+          
+          <div class="tl-item sr sd3">
+            <div class="tl-dot"></div>
+            <div class="tl-yr">2021 Passed out</div>
+            <div class="tl-title">Class X Board Of Secondary Education</div>
+            <div class="tl-place">East Gangavaram · State Syllabus· 93.8%</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="info-card sr">
+          <div class="info-card-title"><span>🏅</span> Certifications</div>
+          <div class="achievement-item"><div class="ach-icon" style="background:#e8f9f0;">🌐</div><div><div class="ach-t">Front End Web Developer</div><div class="ach-s">Infosys Springboard · 2024</div></div></div>
+          <div class="achievement-item"><div class="ach-icon" style="background:#eff6ff;">🤖</div><div><div class="ach-t">"Google Cloud Computing Foundations Certificate" on Google Cloud Skills Boost</div><div class="ach-s">Google Cloud · 2025</div></div></div>
+          <div class="achievement-item"><div class="ach-icon" style="background:#fffbeb;">☁️</div><div><div class="ach-t">AWS Cloud Computing (2024-25) Workshop Certificate</div><div class="ach-s">Amazon Web Services · 2025</div></div></div>
+          <div class="achievement-item"><div class="ach-icon" style="background:#fdf4ff;">🐍</div><div><div class="ach-t">The Complete Python Developer </div><div class="ach-s">Udemy - 2025</div></div></div>
+        </div>
+        <div class="info-card sr sd1">
+          <div class="info-card-title"><span>⚡</span> Extra-Curricular</div>
+          <div class="achievement-item"><div class="ach-icon" style="background:#fffbeb;">📝</div><div><div class="ach-t">100+ LeetCode Problems</div><div class="ach-s">Contest Rating - 1,414</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="container">
+    <div class="sec-tag sr">Get In Touch</div>
+    <h2 class="contact-big sr sd1">Let's build<br><em>something</em><br>together.</h2>
+    <div class="contact-grid sr sd2">
+  <a class="ccon" href="mailto:323103310125@gvpce.ac.in">
+    <div class="ccon-icon">✉️</div>
+    <div class="ccon-label">Email</div>
+    <div class="ccon-val">323103310125@gvpce.ac.in</div>
+  </a>
+  <a class="ccon" href="https://www.linkedin.com/in/kummitha-venkata-gopinadh-reddy-548709308" target="_blank" rel="noopener noreferrer">
+    <div class="ccon-icon">💼</div>
+    <div class="ccon-label">LinkedIn</div>
+    <div class="ccon-val">in/gopinadh</div>
+  </a>
+  <a class="ccon" href="https://github.com/kvgopinr02" target="_blank" rel="noopener noreferrer">
+    <div class="ccon-icon">🐙</div>
+    <div class="ccon-label">GitHub</div>
+    <div class="ccon-val">github/kvgopinr02</div>
+  </a>
+</div>
+    <div class="cf sr sd3">
+  <form id="cform" action="https://formspree.io/f/mgoldagl" method="POST">
+    <div class="cf-row">
+      <div class="cf-field">
+        <label class="cf-label">Name</label>
+        <input class="cf-input" type="text" name="name" placeholder="Your name">
+      </div>
+      <div class="cf-field">
+        <label class="cf-label">Email</label>
+        <input class="cf-input" type="email" name="email" placeholder="you@email.com">
+      </div>
+    </div>
+    <div class="cf-field">
+      <label class="cf-label">Subject</label>
+      <input class="cf-input" type="text" name="subject" placeholder="Internship / Collab / Just saying hi!">
+    </div>
+    <div class="cf-field">
+      <label class="cf-label">Message</label>
+      <textarea class="cf-ta" name="message" placeholder="Tell me more..."></textarea>
+    </div>
+
+    <!-- Hidden field to set recipient -->
+    <input type="hidden" name="_replyto" value="323103310125@gvpce.ac.in">
+
+    <div class="cf-foot">
+      <button type="submit" class="mag-btn mag-btn-dark">
+        <div class="btn-bg"></div>
+        <span>Send Message</span>
+        <span class="btn-arrow">→</span>
+      </button>
+    </div>
+  </form>
+</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">Gopinadh<em style="font-style:italic;color:var(--lime)"></em> Portfolio</div>
+  <div class="f-copy">© 2026 · GVPCE Visakhapatnam · BTech CSE</div>
+  <div class="f-links">
+    <a href="https://github.com/kvgopinr02">GitHub</a><a href="https://www.linkedin.com/in/kummitha-venkata-gopinadh-reddy-548709308">LinkedIn</a>
+    <a href="https://leetcode.com/u/kvgopinr27/">LeetCode</a>
+  </div>
+</footer>
+
+<script>
+/* ── NAV SCROLL ── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', scrollY > 50);
+}, {passive:true});
+
+/* ── SCROLL REVEAL ── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+  });
+}, {threshold: 0.1});
+document.querySelectorAll('.sr').forEach(el => io.observe(el));
+
+/* ── SKILL BARS ── */
+const barIO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.bc-fill').forEach(b => { b.style.width = b.dataset.w + '%'; });
+      barIO.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.2});
+document.querySelectorAll('.bento-cell').forEach(c => barIO.observe(c));
+
+/* ── MAGNETIC BUTTON EFFECT ── */
+document.querySelectorAll('.mag-btn').forEach(btn => {
+  btn.addEventListener('mousemove', e => {
+    const r = btn.getBoundingClientRect();
+    const x = (e.clientX - r.left - r.width/2) * .25;
+    const y = (e.clientY - r.top - r.height/2) * .25;
+    btn.style.transform = `translate(${x}px, ${y}px)`;
+  });
+  btn.addEventListener('mouseleave', () => btn.style.transform = '');
+});
+
+/* ── FORM ── */
+document.getElementById('cform').addEventListener('submit', e => {
+  e.preventDefault();
+  const btn = e.target.querySelector('button');
+  const span = btn.querySelector('span');
+  span.textContent = 'Sent! 🎉';
+  btn.style.background = 'var(--green)';
+  setTimeout(() => { span.textContent = 'Send Message'; btn.style.background = ''; }, 3000);
+});
+
+/* ── TILT CARDS ── */
+document.querySelectorAll('.pc').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientY - r.top  - r.height/2) / r.height * 3;
+    const y = (e.clientX - r.left - r.width /2) / r.width * -3;
+    card.style.transform = `translateX(6px) rotateX(${x}deg) rotateY(${y}deg)`;
+    card.style.perspective = '800px';
+  });
+  card.addEventListener('mouseleave', () => card.style.transform = '');
+});
+</script>
+</body>
+</html>
