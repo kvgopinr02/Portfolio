@@ -39,7 +39,7 @@ nav {
 }
 nav.shown { opacity: 1; transform: translateY(0); }
 nav.scrolled {
-  background: rgba(247,245,240,0.85);
+  background: rgba(247,245,240,0.92);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
 }
@@ -71,6 +71,47 @@ nav.scrolled {
 }
 .n-pill:hover { background: var(--green); transform: scale(1.04); }
 
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column; gap: 5px; cursor: pointer;
+  background: none; border: none; padding: .3rem;
+}
+.hamburger span {
+  display: block; width: 22px; height: 2px;
+  background: var(--ink); border-radius: 2px;
+  transition: transform .3s, opacity .3s;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile nav drawer */
+.mobile-nav {
+  display: none;
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(247,245,240,0.97);
+  backdrop-filter: blur(20px);
+  z-index: 99;
+  flex-direction: column; align-items: center; justify-content: center;
+  gap: 2.5rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s;
+}
+.mobile-nav.open { opacity: 1; pointer-events: all; display: flex; }
+.mobile-nav a {
+  font-family: 'Fraunces', serif; font-size: 2.5rem; font-weight: 700;
+  color: var(--ink); text-decoration: none;
+  transition: color .2s;
+}
+.mobile-nav a:hover { color: var(--green); }
+.mobile-nav .mn-hire {
+  margin-top: 1rem; padding: .9rem 2.5rem; border-radius: 100px;
+  background: var(--ink); color: var(--bg);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: .9rem; font-weight: 600;
+}
+
 /* ══ SECTION LAYOUT ══ */
 section { padding: 7rem 3rem; position: relative; }
 .container { max-width: 1140px; margin: 0 auto; }
@@ -82,8 +123,6 @@ section { padding: 7rem 3rem; position: relative; }
   align-items: center; gap: 4rem;
   padding-top: 7rem;
 }
-.hero-left {}
-
 .hero-tags {
   display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 2.5rem;
 }
@@ -135,7 +174,7 @@ section { padding: 7rem 3rem; position: relative; }
   padding: .9rem 2.2rem; border-radius: 100px;
   font-family: 'Space Grotesk', sans-serif;
   font-size: .82rem; font-weight: 600; letter-spacing: .03em;
-  text-decoration: none; border: none;
+  text-decoration: none; border: none; cursor: pointer;
   transition: transform .25s cubic-bezier(.34,1.56,.64,1);
   position: relative; overflow: hidden;
 }
@@ -204,6 +243,46 @@ section { padding: 7rem 3rem; position: relative; }
   background: var(--green); animation: ping 1.5s ease-in-out infinite;
 }
 @keyframes ping { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.5);opacity:.4} }
+
+/* Mobile ID Card (shown only on mobile) */
+.mobile-id-card {
+  display: none;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  position: relative; overflow: hidden;
+  opacity: 0; animation: fadeUp .8s 1.5s ease forwards;
+}
+.mobile-id-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--green), var(--lime), var(--warm));
+}
+.mic-top { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; }
+.mic-avatar {
+  width: 56px; height: 56px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--green), var(--lime));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 700; color: var(--ink);
+}
+.mic-name { font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 700; }
+.mic-sub { font-size: .72rem; color: var(--muted); }
+.mic-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .5rem; }
+.mic-stat {
+  background: var(--bg); border-radius: 10px; padding: .7rem .4rem; text-align: center;
+  border: 1px solid var(--border);
+}
+.mic-stat-n { font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 700; color: var(--green); }
+.mic-stat-l { font-size: .58rem; color: var(--muted); letter-spacing: .02em; }
+.mic-avail {
+  display: flex; align-items: center; gap: .5rem;
+  margin-top: 1rem; padding: .5rem .9rem;
+  background: #e8f9f0; border-radius: 100px;
+  font-size: .68rem; font-weight: 600; color: var(--green);
+  justify-content: center;
+}
 
 /* ══ MARQUEE DIVIDER ══ */
 .marquee-wrap {
@@ -299,7 +378,6 @@ section { padding: 7rem 3rem; position: relative; }
 }
 .pc:hover { box-shadow: 0 24px 60px rgba(18,16,14,.08); transform: translateX(6px); }
 .pc:hover::after { transform: scaleY(1); }
-.pc-left {}
 .pc-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
 .pc-icon {
   width: 46px; height: 46px; border-radius: 12px;
@@ -357,7 +435,6 @@ section { padding: 7rem 3rem; position: relative; }
   font-size: .62rem; font-weight: 600; padding: .2rem .55rem;
   border-radius: 5px; background: var(--card); border: 1px solid var(--border); color: var(--ink);
 }
-.about-info {}
 .info-card {
   background: var(--card); border-radius: 20px;
   border: 1px solid var(--border); padding: 2rem;
@@ -400,7 +477,7 @@ section { padding: 7rem 3rem; position: relative; }
 .ccon:hover { border-color: var(--lime); background: rgba(181,242,62,.06); transform: translateY(-4px); }
 .ccon-icon { font-size: 1.4rem; margin-bottom: .5rem; }
 .ccon-label { font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: .3rem; }
-.ccon-val { font-size: .78rem; font-weight: 600; color: var(--lime); }
+.ccon-val { font-size: .78rem; font-weight: 600; color: var(--lime); word-break: break-all; }
 
 .cf {
   max-width: 580px; margin: 0 auto;
@@ -440,21 +517,109 @@ footer {
 .sr.on { opacity: 1; transform: translateY(0); }
 .sd1 { transition-delay: .1s; } .sd2 { transition-delay: .2s; } .sd3 { transition-delay: .3s; } .sd4 { transition-delay: .4s; }
 
-/* ══ RESPONSIVE ══ */
+/* ══════════════════════════════════════════
+   RESPONSIVE — TABLET
+══════════════════════════════════════════ */
 @media(max-width:980px){
-  #hero { grid-template-columns: 1fr; padding-top: 5rem; }
-  .hero-right { display: none; }
-  .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-  .bento { grid-template-columns: repeat(6,1fr); }
-  .s1,.s2,.s3,.s4,.s5,.s6,.s7,.s8,.s9,.bento-wide { grid-column: span 3; }
-  .contact-grid { grid-template-columns: 1fr; }
-  section { padding: 5rem 1.5rem; }
   nav { padding: 1.2rem 1.5rem; }
   .n-links { display: none; }
-  .pc { grid-template-columns: 1fr; }
+  .n-pill { display: none; }
+  .hamburger { display: flex; }
+
+  section { padding: 5rem 1.5rem; }
+
+  #hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 6rem 1.5rem 3rem;
+    gap: 2rem;
+  }
+  .hero-left { padding: 0 !important; }
+  .hero-right { display: none !important; }
+  .mobile-id-card { display: block; }
+
+  .hero-h { font-size: clamp(2.8rem, 9vw, 5rem); margin-bottom: 1.5rem; }
+  .hero-p { max-width: 100%; font-size: .9rem; }
+  .hero-actions { gap: .8rem; }
+  .hero-tags { gap: .4rem; }
+  .tag-pill { font-size: .63rem; }
+
+  .bento {
+    grid-template-columns: repeat(6,1fr);
+    grid-auto-rows: 80px;
+  }
+  .s1,.s2,.s3,.s4,.s5,.s6,.s7,.s8,.s9 { grid-column: span 3; grid-row: span 2; }
+  .bento-wide { grid-column: span 6; grid-row: span 2; flex-direction: column; align-items: flex-start; justify-content: flex-end; }
+  .bento-wide .bc-emoji { font-size: 1.6rem; margin-bottom: .5rem; }
+
+  .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+
+  .contact-grid { grid-template-columns: 1fr 1fr; max-width: 100%; }
+
+  .pc { grid-template-columns: 1fr; gap: 1rem; padding: 1.5rem; }
+  .pc:hover { transform: none; }
   .pc-right { flex-direction: row; align-items: center; flex-wrap: wrap; }
+
   .cf-row { grid-template-columns: 1fr; }
-  footer { flex-direction: column; gap: 1rem; padding: 2rem 1.5rem; }
+  .cf { padding: 1.5rem; }
+
+  #contact { padding: 5rem 1.5rem; }
+  .contact-big { font-size: clamp(2.5rem, 8vw, 5rem); }
+
+  footer { flex-direction: column; gap: 1rem; padding: 2rem 1.5rem; text-align: center; }
+  .f-links { justify-content: center; flex-wrap: wrap; gap: 1rem; }
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — MOBILE (≤600px)
+══════════════════════════════════════════ */
+@media(max-width:600px){
+  nav { padding: 1rem 1.2rem; }
+
+  section { padding: 4.5rem 1.2rem; }
+
+  #hero { padding: 5.5rem 1.2rem 2.5rem; }
+
+  .hero-h { font-size: clamp(2.4rem, 11vw, 3.5rem); }
+  .tag-pill { font-size: .6rem; padding: .25rem .7rem; }
+
+  .mobile-id-card { padding: 1.2rem; }
+  .mic-name { font-size: 1rem; }
+
+  .bento {
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: auto;
+  }
+  .s1,.s2,.s3,.s4,.s5,.s6,.s7,.s8,.s9 { grid-column: span 1; grid-row: span 1; }
+  .bento-wide { grid-column: span 2; grid-row: span 1; flex-direction: column; align-items: flex-start; justify-content: flex-end; }
+  .bento-cell { padding: 1rem; min-height: 100px; }
+  .bc-emoji { font-size: 1.3rem; }
+  .bc-name { font-size: .8rem; }
+
+  .pc-title { font-size: 1rem; }
+  .pc-desc { font-size: .78rem; }
+
+  .contact-grid { grid-template-columns: 1fr; }
+  .ccon-val { font-size: .7rem; }
+
+  .tl-title { font-size: .95rem; }
+  .tl-chips { gap: .3rem; }
+
+  .hero-actions .mag-btn { padding: .8rem 1.6rem; font-size: .78rem; }
+
+  #contact { padding: 4rem 1.2rem; }
+  .contact-big { font-size: clamp(2rem, 10vw, 3.5rem); }
+
+  footer { padding: 1.5rem 1.2rem; }
+  .f-copy { font-size: .65rem; }
+}
+
+/* ══ Extra-small (≤400px) ══ */
+@media(max-width:400px){
+  .hero-h { font-size: clamp(2rem, 12vw, 2.8rem); }
+  .bento { grid-template-columns: 1fr; }
+  .s1,.s2,.s3,.s4,.s5,.s6,.s7,.s8,.s9,.bento-wide { grid-column: span 1; }
+  .id-stat-row, .mic-stats { grid-template-columns: 1fr 1fr 1fr; }
 }
 </style>
 </head>
@@ -462,7 +627,7 @@ footer {
 
 <!-- NAV -->
 <nav id="nav" class="shown">
-  <div class="n-logo">Gopinadh  </div>
+  <div class="n-logo">Gopinadh <em>Reddy</em></div>
   <ul class="n-links">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
@@ -470,7 +635,19 @@ footer {
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="#contact" class="n-pill">Hire Me ↗</a>
+  <button class="hamburger" id="ham" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- Mobile Nav Drawer -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="#about"    onclick="closeMobileNav()">About</a>
+  <a href="#skills"   onclick="closeMobileNav()">Skills</a>
+  <a href="#projects" onclick="closeMobileNav()">Projects</a>
+  <a href="#contact"  onclick="closeMobileNav()">Contact</a>
+  <a href="#contact"  onclick="closeMobileNav()" class="mn-hire">Hire Me ↗</a>
+</div>
 
 <!-- ── HERO ── -->
 <section id="hero">
@@ -486,9 +663,27 @@ footer {
         <span class="line"><span class="li">Hello, I'm</span></span>
         <span class="line"><span class="li green">Gopinadh</span></span>
         <span class="line"><span class="li">Reddy</span></span>
-        <span class="line"><span class="li italic">- computer science student</span></span>
+        <span class="line"><span class="li italic">— computer science student</span></span>
       </h1>
-      <p class="hero-p">Aspiring Full-Stack Developer and Computer Science student with strong problem-solving abilities and a passion for building real-world applications. Experienced in developing user-centric solutions and eager to contribute to innovative projects while continuously learning and growing in a professional environment..</p>
+
+      <!-- Mobile ID Card (replaces sidebar on mobile) -->
+      <div class="mobile-id-card">
+        <div class="mic-top">
+          <div class="mic-avatar">G</div>
+          <div>
+            <div class="mic-name">Gopinadh Reddy</div>
+            <div class="mic-sub">CSE · GVPCE · 2023–2027</div>
+          </div>
+        </div>
+        <div class="mic-stats">
+          <div class="mic-stat"><div class="mic-stat-n">8.2</div><div class="mic-stat-l">CGPA</div></div>
+          <div class="mic-stat"><div class="mic-stat-n">3+</div><div class="mic-stat-l">Projects</div></div>
+          <div class="mic-stat"><div class="mic-stat-n">100+</div><div class="mic-stat-l">DSA</div></div>
+        </div>
+        <div class="mic-avail"><div class="avail-dot"></div> Available for Internships</div>
+      </div>
+
+      <p class="hero-p">Aspiring Full-Stack Developer and Computer Science student with strong problem-solving abilities and a passion for building real-world applications. Experienced in developing user-centric solutions and eager to contribute to innovative projects while continuously learning and growing in a professional environment.</p>
       <div class="hero-actions">
         <a href="#projects" class="mag-btn mag-btn-dark"><div class="btn-bg"></div><span>View Projects</span><span class="btn-arrow">↗</span></a>
         <a href="323103310125_resume.pdf" class="mag-btn mag-btn-light" download><div class="btn-bg"></div><span>Resume</span><span class="btn-arrow">↓</span></a>
@@ -507,7 +702,7 @@ footer {
         <div class="id-stat-row">
           <div class="id-stat"><div class="id-stat-n">8.2</div><div class="id-stat-l">CGPA</div></div>
           <div class="id-stat"><div class="id-stat-n">3+</div><div class="id-stat-l">Projects</div></div>
-          <div class="id-stat"><div class="id-stat-n">0</div><div class="id-stat-l">Hackathons</div></div>
+          <div class="id-stat"><div class="id-stat-n">100+</div><div class="id-stat-l">DSA</div></div>
         </div>
         <div class="avail-badge"><div class="avail-dot"></div> Available for Internships</div>
       </div>
@@ -525,7 +720,6 @@ footer {
     <span class="m-item">Node.js & APIs <span class="m-star">✦</span></span>
     <span class="m-item hi">Open to Work <span class="m-star">✦</span></span>
     <span class="m-item">100+ DSA Problems <span class="m-star">✦</span></span>
-    <!-- dupe -->
     <span class="m-item hi">Full Stack Development <span class="m-star">✦</span></span>
     <span class="m-item">Machine Learning & Cloud Computing <span class="m-star">✦</span></span>
     <span class="m-item">React js <span class="m-star">✦</span></span>
@@ -542,26 +736,17 @@ footer {
     <div class="sr"><div class="sec-tag">Technical Skills</div></div>
     <div class="sr sd1"><h2 class="sec-h">What I <em>work with</em></h2></div>
     <div class="bento sr sd2">
-  <!-- Programming -->
-  <div class="bento-cell s1"><div class="bc-glow"></div><div class="bc-emoji">🐍</div><div class="bc-name">Python</div><div class="bc-sub">Programming</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="85"></div></div></div></div>
-  <div class="bento-cell s2"><div class="bc-glow"></div><div class="bc-emoji">🟨</div><div class="bc-name">JavaScript</div><div class="bc-sub">Programming</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="50"></div></div></div></div>
-
-  <!-- MERN Stack -->
-  <div class="bento-cell bento-wide s3"><div class="bc-glow"></div><div style="display:flex;flex-direction:column;justify-content:flex-end;flex:1"><div class="bc-emoji">🍃</div><div class="bc-name">MERN Stack</div><div class="bc-sub">MongoDB · Express.js · React.js · Node.js</div></div></div>
-  
-  <!-- Tools & Technologies -->
-  <div class="bento-cell s8"><div class="bc-glow"></div><div class="bc-emoji">🐙</div><div class="bc-name">GitHub</div><div class="bc-sub">Version Control</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="90"></div></div></div></div>
-  <div class="bento-cell s9"><div class="bc-glow"></div><div class="bc-emoji">💻</div><div class="bc-name">VS Code</div><div class="bc-sub">Code Editor</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="70"></div></div></div></div>
-  <div class="bento-cell s1"><div class="bc-glow"></div><div class="bc-emoji">🚀</div><div class="bc-name">Render</div><div class="bc-sub">Deployment</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="50"></div></div></div></div>
-
-  <!-- Core Concepts -->
-  <div class="bento-cell s2"><div class="bc-glow"></div><div class="bc-emoji">🧩</div><div class="bc-name">DSA Basics</div><div class="bc-sub">Core Concepts</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="75"></div></div></div></div>
-  <div class="bento-cell s4"><div class="bc-glow"></div><div class="bc-emoji">🗄️</div><div class="bc-name">MySQL</div><div class="bc-sub">Database</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="50"></div></div></div></div>
-
-
-<div class="bento-cell bento-wide s3"><div class="bc-glow"></div><div style="display:flex;flex-direction:column;justify-content:flex-end;flex:1"><div class="bc-emoji">📚</div><div class="bc-name">Core Subjects</div><div class="bc-sub">Operating System · Networking · Cloud Computing</div></div></div>
+      <div class="bento-cell s1"><div class="bc-glow"></div><div class="bc-emoji">🐍</div><div class="bc-name">Python</div><div class="bc-sub">Programming</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="85"></div></div></div></div>
+      <div class="bento-cell s2"><div class="bc-glow"></div><div class="bc-emoji">🟨</div><div class="bc-name">JavaScript</div><div class="bc-sub">Programming</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="50"></div></div></div></div>
+      <div class="bento-cell bento-wide s3"><div class="bc-glow"></div><div style="display:flex;flex-direction:column;justify-content:flex-end;flex:1"><div class="bc-emoji">🍃</div><div class="bc-name">MERN Stack</div><div class="bc-sub">MongoDB · Express.js · React.js · Node.js</div></div></div>
+      <div class="bento-cell s8"><div class="bc-glow"></div><div class="bc-emoji">🐙</div><div class="bc-name">GitHub</div><div class="bc-sub">Version Control</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="90"></div></div></div></div>
+      <div class="bento-cell s9"><div class="bc-glow"></div><div class="bc-emoji">💻</div><div class="bc-name">VS Code</div><div class="bc-sub">Code Editor</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="70"></div></div></div></div>
+      <div class="bento-cell s1"><div class="bc-glow"></div><div class="bc-emoji">🚀</div><div class="bc-name">Render</div><div class="bc-sub">Deployment</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="50"></div></div></div></div>
+      <div class="bento-cell s2"><div class="bc-glow"></div><div class="bc-emoji">🧩</div><div class="bc-name">DSA Basics</div><div class="bc-sub">Core Concepts</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="75"></div></div></div></div>
+      <div class="bento-cell s4"><div class="bc-glow"></div><div class="bc-emoji">🗄️</div><div class="bc-name">MySQL</div><div class="bc-sub">Database</div><div class="bc-level"><div class="bc-bar"><div class="bc-fill" data-w="50"></div></div></div></div>
+      <div class="bento-cell bento-wide s3"><div class="bc-glow"></div><div style="display:flex;flex-direction:column;justify-content:flex-end;flex:1"><div class="bc-emoji">📚</div><div class="bc-name">Core Subjects</div><div class="bc-sub">Operating System · Networking · Cloud Computing</div></div></div>
+    </div>
   </div>
-  
 </section>
 
 <!-- ── PROJECTS ── -->
@@ -574,15 +759,17 @@ footer {
       <div class="pc sr sd1">
         <div class="pc-left">
           <div class="pc-head">
-            <div class="pc-icon" style="background:#e8f9f0;">🤖</div>
+            <div class="pc-icon" style="background:#e8f9f0;">🌐</div>
             <div class="pc-title">CodeGarage – Academic Resource & Programming Learning Platform</div>
           </div>
-          <div class="pc-desc">Built an academic website providing semester-wise PDFs, lab manuals, and C, C++, DSA programs.Designed a clean, user-friendly interface for easy access to learning resources.Deployed live using a custom domain: codegarage.co.in </div>
+          <div class="pc-desc">Built an academic website providing semester-wise PDFs, lab manuals, and C, C++, DSA programs. Designed a clean, user-friendly interface for easy access to learning resources. Deployed live using a custom domain: codegarage.co.in</div>
           <div class="pc-tags"><span class="ptag">MERN Stack</span><span class="ptag">VS Code</span><span class="ptag">Render</span><span class="ptag">Github</span></div>
         </div>
         <div class="pc-right">
           <span class="pc-status st-live">Live</span>
-          <div class="pc-links"><a class="pc-link" href="https://codegarage.co.in/" title="GitHub">⌥</a><a class="pc-link" href="codegarage.co.in" title="Demo">↗</a></div>
+          <div class="pc-links">
+            <a class="pc-link" href="https://codegarage.co.in/" target="_blank" title="Visit Site">↗</a>
+          </div>
           <div class="pc-year">2025</div>
         </div>
       </div>
@@ -590,23 +777,21 @@ footer {
       <div class="pc sr sd2">
         <div class="pc-left">
           <div class="pc-head">
-            <div class="pc-icon" style="background:#fffbeb;">🤖</div>
-            <div class="pc-title">Weather Report Project </div>
+            <div class="pc-icon" style="background:#fffbeb;">☁️</div>
+            <div class="pc-title">Weather Report Project</div>
           </div>
-          <div class="pc-desc">Completed an internship in Google Cloud Computing Foundations through EduSkills, gaining hands-on exposure to cloud 
-technologies. Developed a Weather Report Project using BigQuery, focusing on data analysis and real-time insights. Strengthened skills in cloud computing, SQL, and building data-driven web-based solutions.</div>
-          <div class="pc-tags"><span class="ptag">Cloud Computing</span><span class="ptag">BigQuery</span></div>
+          <div class="pc-desc">Completed an internship in Google Cloud Computing Foundations through EduSkills, gaining hands-on exposure to cloud technologies. Developed a Weather Report Project using BigQuery, focusing on data analysis and real-time insights. Strengthened skills in cloud computing, SQL, and building data-driven web-based solutions.</div>
+          <div class="pc-tags"><span class="ptag">Cloud Computing</span><span class="ptag">BigQuery</span><span class="ptag">SQL</span><span class="ptag">Google Cloud</span></div>
         </div>
         <div class="pc-right">
           <span class="pc-status st-live">Live</span>
-          <div class="pc-links"><a class="pc-link" href="#" title="GitHub">⌥</a><a class="pc-link" href="#" title="Demo">↗</a></div>
+          <div class="pc-links">
+            <a class="pc-link" href="#" title="GitHub">⌥</a>
+            <a class="pc-link" href="#" title="Demo">↗</a>
+          </div>
           <div class="pc-year">2024</div>
         </div>
       </div>
-
-     
-
-      
 
     </div>
   </div>
@@ -630,31 +815,29 @@ technologies. Developed a Weather Report Project using BigQuery, focusing on dat
           </div>
           <div class="tl-item sr sd1">
             <div class="tl-dot"></div>
-            <div class="tl-yr">2021 - 2023</div>
-            <div class="tl-title">Class XII — Board Of Intermediate Education AP</div>
+            <div class="tl-yr">2021 – 2023</div>
+            <div class="tl-title">Class XII — Board of Intermediate Education AP</div>
             <div class="tl-place">MPC Narasaraopet · State Board · 98.0%</div>
-            
           </div>
-          
           <div class="tl-item sr sd3">
             <div class="tl-dot"></div>
             <div class="tl-yr">2021 Passed out</div>
-            <div class="tl-title">Class X Board Of Secondary Education</div>
-            <div class="tl-place">East Gangavaram · State Syllabus· 93.8%</div>
+            <div class="tl-title">Class X — Board of Secondary Education</div>
+            <div class="tl-place">East Gangavaram · State Syllabus · 93.8%</div>
           </div>
         </div>
       </div>
       <div>
         <div class="info-card sr">
           <div class="info-card-title"><span>🏅</span> Certifications</div>
-          <div class="achievement-item"><div class="ach-icon" style="background:#e8f9f0;">🌐</div><div><div class="ach-t">Front End Web Developer</div><div class="ach-s">Infosys Springboard · 2024</div></div></div>
-          <div class="achievement-item"><div class="ach-icon" style="background:#eff6ff;">🤖</div><div><div class="ach-t">"Google Cloud Computing Foundations Certificate" on Google Cloud Skills Boost</div><div class="ach-s">Google Cloud · 2025</div></div></div>
-          <div class="achievement-item"><div class="ach-icon" style="background:#fffbeb;">☁️</div><div><div class="ach-t">AWS Cloud Computing (2024-25) Workshop Certificate</div><div class="ach-s">Amazon Web Services · 2025</div></div></div>
-          <div class="achievement-item"><div class="ach-icon" style="background:#fdf4ff;">🐍</div><div><div class="ach-t">The Complete Python Developer </div><div class="ach-s">Udemy - 2025</div></div></div>
+          <div class="achievement-item"><div class="ach-icon" style="background:#e8f9f0;">🌐</div><div><div class="ach-t">Front End Web Developer</div><div class="ach-s">Infosys Springboard · 2024</div></div></div>
+          <div class="achievement-item"><div class="ach-icon" style="background:#eff6ff;">☁️</div><div><div class="ach-t">Google Cloud Computing Foundations Certificate</div><div class="ach-s">Google Cloud Skills Boost · 2025</div></div></div>
+          <div class="achievement-item"><div class="ach-icon" style="background:#fffbeb;">☁️</div><div><div class="ach-t">AWS Cloud Computing Workshop Certificate</div><div class="ach-s">Amazon Web Services · 2025</div></div></div>
+          <div class="achievement-item"><div class="ach-icon" style="background:#fdf4ff;">🐍</div><div><div class="ach-t">The Complete Python Developer</div><div class="ach-s">Udemy · 2025</div></div></div>
         </div>
         <div class="info-card sr sd1">
           <div class="info-card-title"><span>⚡</span> Extra-Curricular</div>
-          <div class="achievement-item"><div class="ach-icon" style="background:#fffbeb;">📝</div><div><div class="ach-t">100+ LeetCode Problems</div><div class="ach-s">Contest Rating - 1,414</div></div></div>
+          <div class="achievement-item"><div class="ach-icon" style="background:#fffbeb;">📝</div><div><div class="ach-t">100+ LeetCode Problems</div><div class="ach-s">Contest Rating — 1,414</div></div></div>
         </div>
       </div>
     </div>
@@ -667,65 +850,63 @@ technologies. Developed a Weather Report Project using BigQuery, focusing on dat
     <div class="sec-tag sr">Get In Touch</div>
     <h2 class="contact-big sr sd1">Let's build<br><em>something</em><br>together.</h2>
     <div class="contact-grid sr sd2">
-  <a class="ccon" href="mailto:323103310125@gvpce.ac.in">
-    <div class="ccon-icon">✉️</div>
-    <div class="ccon-label">Email</div>
-    <div class="ccon-val">323103310125@gvpce.ac.in</div>
-  </a>
-  <a class="ccon" href="https://www.linkedin.com/in/kummitha-venkata-gopinadh-reddy-548709308" target="_blank" rel="noopener noreferrer">
-    <div class="ccon-icon">💼</div>
-    <div class="ccon-label">LinkedIn</div>
-    <div class="ccon-val">in/gopinadh</div>
-  </a>
-  <a class="ccon" href="https://github.com/kvgopinr02" target="_blank" rel="noopener noreferrer">
-    <div class="ccon-icon">🐙</div>
-    <div class="ccon-label">GitHub</div>
-    <div class="ccon-val">github/kvgopinr02</div>
-  </a>
-</div>
+      <a class="ccon" href="mailto:323103310125@gvpce.ac.in">
+        <div class="ccon-icon">✉️</div>
+        <div class="ccon-label">Email</div>
+        <div class="ccon-val">323103310125@gvpce.ac.in</div>
+      </a>
+      <a class="ccon" href="https://www.linkedin.com/in/kummitha-venkata-gopinadh-reddy-548709308" target="_blank" rel="noopener noreferrer">
+        <div class="ccon-icon">💼</div>
+        <div class="ccon-label">LinkedIn</div>
+        <div class="ccon-val">in/gopinadh-reddy</div>
+      </a>
+      <a class="ccon" href="https://github.com/kvgopinr02" target="_blank" rel="noopener noreferrer">
+        <div class="ccon-icon">🐙</div>
+        <div class="ccon-label">GitHub</div>
+        <div class="ccon-val">github/kvgopinr02</div>
+      </a>
+    </div>
     <div class="cf sr sd3">
-  <form id="cform" action="https://formspree.io/f/mgoldagl" method="POST">
-    <div class="cf-row">
-      <div class="cf-field">
-        <label class="cf-label">Name</label>
-        <input class="cf-input" type="text" name="name" placeholder="Your name">
-      </div>
-      <div class="cf-field">
-        <label class="cf-label">Email</label>
-        <input class="cf-input" type="email" name="email" placeholder="you@email.com">
-      </div>
+      <form id="cform" action="https://formspree.io/f/mgoldagl" method="POST">
+        <div class="cf-row">
+          <div class="cf-field">
+            <label class="cf-label">Name</label>
+            <input class="cf-input" type="text" name="name" placeholder="Your name">
+          </div>
+          <div class="cf-field">
+            <label class="cf-label">Email</label>
+            <input class="cf-input" type="email" name="email" placeholder="you@email.com">
+          </div>
+        </div>
+        <div class="cf-field">
+          <label class="cf-label">Subject</label>
+          <input class="cf-input" type="text" name="subject" placeholder="Internship / Collab / Just saying hi!">
+        </div>
+        <div class="cf-field">
+          <label class="cf-label">Message</label>
+          <textarea class="cf-ta" name="message" placeholder="Tell me more..."></textarea>
+        </div>
+        <input type="hidden" name="_replyto" value="323103310125@gvpce.ac.in">
+        <div class="cf-foot">
+          <button type="submit" class="mag-btn mag-btn-dark">
+            <div class="btn-bg"></div>
+            <span>Send Message</span>
+            <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </form>
     </div>
-    <div class="cf-field">
-      <label class="cf-label">Subject</label>
-      <input class="cf-input" type="text" name="subject" placeholder="Internship / Collab / Just saying hi!">
-    </div>
-    <div class="cf-field">
-      <label class="cf-label">Message</label>
-      <textarea class="cf-ta" name="message" placeholder="Tell me more..."></textarea>
-    </div>
-
-    <!-- Hidden field to set recipient -->
-    <input type="hidden" name="_replyto" value="323103310125@gvpce.ac.in">
-
-    <div class="cf-foot">
-      <button type="submit" class="mag-btn mag-btn-dark">
-        <div class="btn-bg"></div>
-        <span>Send Message</span>
-        <span class="btn-arrow">→</span>
-      </button>
-    </div>
-  </form>
-</div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="f-logo">Gopinadh<em style="font-style:italic;color:var(--lime)"></em> Portfolio</div>
+  <div class="f-logo">Gopinadh <em style="font-style:italic;color:var(--lime)">Reddy</em></div>
   <div class="f-copy">© 2026 · GVPCE Visakhapatnam · BTech CSE</div>
   <div class="f-links">
-    <a href="https://github.com/kvgopinr02">GitHub</a><a href="https://www.linkedin.com/in/kummitha-venkata-gopinadh-reddy-548709308">LinkedIn</a>
-    <a href="https://leetcode.com/u/kvgopinr27/">LeetCode</a>
+    <a href="https://github.com/kvgopinr02" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/in/kummitha-venkata-gopinadh-reddy-548709308" target="_blank">LinkedIn</a>
+    <a href="https://leetcode.com/u/kvgopinr27/" target="_blank">LeetCode</a>
   </div>
 </footer>
 
@@ -735,6 +916,20 @@ const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', scrollY > 50);
 }, {passive:true});
+
+/* ── HAMBURGER MENU ── */
+const ham = document.getElementById('ham');
+const mobileNav = document.getElementById('mobile-nav');
+ham.addEventListener('click', () => {
+  ham.classList.toggle('open');
+  mobileNav.classList.toggle('open');
+  document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+});
+function closeMobileNav() {
+  ham.classList.remove('open');
+  mobileNav.classList.remove('open');
+  document.body.style.overflow = '';
+}
 
 /* ── SCROLL REVEAL ── */
 const io = new IntersectionObserver(entries => {
@@ -755,16 +950,18 @@ const barIO = new IntersectionObserver(entries => {
 }, {threshold: 0.2});
 document.querySelectorAll('.bento-cell').forEach(c => barIO.observe(c));
 
-/* ── MAGNETIC BUTTON EFFECT ── */
-document.querySelectorAll('.mag-btn').forEach(btn => {
-  btn.addEventListener('mousemove', e => {
-    const r = btn.getBoundingClientRect();
-    const x = (e.clientX - r.left - r.width/2) * .25;
-    const y = (e.clientY - r.top - r.height/2) * .25;
-    btn.style.transform = `translate(${x}px, ${y}px)`;
+/* ── MAGNETIC BUTTON EFFECT (desktop only) ── */
+if(window.innerWidth > 768) {
+  document.querySelectorAll('.mag-btn').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      const x = (e.clientX - r.left - r.width/2) * .25;
+      const y = (e.clientY - r.top - r.height/2) * .25;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+    btn.addEventListener('mouseleave', () => btn.style.transform = '');
   });
-  btn.addEventListener('mouseleave', () => btn.style.transform = '');
-});
+}
 
 /* ── FORM ── */
 document.getElementById('cform').addEventListener('submit', e => {
@@ -776,17 +973,19 @@ document.getElementById('cform').addEventListener('submit', e => {
   setTimeout(() => { span.textContent = 'Send Message'; btn.style.background = ''; }, 3000);
 });
 
-/* ── TILT CARDS ── */
-document.querySelectorAll('.pc').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    const x = (e.clientY - r.top  - r.height/2) / r.height * 3;
-    const y = (e.clientX - r.left - r.width /2) / r.width * -3;
-    card.style.transform = `translateX(6px) rotateX(${x}deg) rotateY(${y}deg)`;
-    card.style.perspective = '800px';
+/* ── TILT CARDS (desktop only) ── */
+if(window.innerWidth > 768) {
+  document.querySelectorAll('.pc').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientY - r.top  - r.height/2) / r.height * 3;
+      const y = (e.clientX - r.left - r.width /2) / r.width * -3;
+      card.style.transform = `translateX(6px) rotateX(${x}deg) rotateY(${y}deg)`;
+      card.style.perspective = '800px';
+    });
+    card.addEventListener('mouseleave', () => card.style.transform = '');
   });
-  card.addEventListener('mouseleave', () => card.style.transform = '');
-});
+}
 </script>
 </body>
 </html>
